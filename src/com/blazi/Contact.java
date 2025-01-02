@@ -64,4 +64,35 @@ public class Contact {
                 phones: %s
                 emails: %s""".formatted(name, "-".repeat(name.length()), phones, emails);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contact contact = (Contact) o;
+        return getName().equals(contact.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return 33 * getName().hashCode();
+    }
+
+    public void addEmail(String companyName) {
+        String[] names = name.split(" ");
+        String email = "%c%s@%s.com".formatted(name.charAt(0), names[names.length - 1],
+                companyName.replaceAll(" ", "").toLowerCase());
+        if (!emails.add(email)) {
+            System.out.println(name + " already has email " + email);
+        } else {
+            System.out.println(name + " now has email " + email);
+        }
+    }
+
+    public void replaceEmailIfExists(String oldEmail, String newEmail) {
+        if (emails.contains(oldEmail)) {
+            emails.remove(oldEmail);
+            emails.add(newEmail);
+        }
+    }
 }
